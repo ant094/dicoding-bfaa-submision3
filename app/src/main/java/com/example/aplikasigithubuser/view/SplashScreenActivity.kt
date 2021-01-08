@@ -17,7 +17,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set tampil berapa ama SplashScreen Di tampilkan
+        // Set tampil berapa lama SplashScreen Di tampilkan
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             startActivity(Intent(this, MainActivity::class.java))
         }, 1500)
