@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Network {
     fun getRetrofit(): Retrofit {
-        return Retrofit.Builder().baseUrl("https://api.github.com/search/")
+        return Retrofit.Builder().baseUrl("https://api.github.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()

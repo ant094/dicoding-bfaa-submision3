@@ -16,7 +16,6 @@ class SearchUserAdapter(private val data: List<ItemsItem?>?, private val itemCli
         RecyclerView.ViewHolder(itemView){
         val imgUser = itemView.imgUser
         val usernameUser = itemView.usernameUser
-        val nameUser = itemView.nameUser
     }
 
     override fun onCreateViewHolder(
@@ -24,14 +23,13 @@ class SearchUserAdapter(private val data: List<ItemsItem?>?, private val itemCli
         viewType: Int
     ): SearchUserAdapter.SearchUserHolder {
         var view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_list_user, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_list_search_user, parent, false)
         return SearchUserAdapter.SearchUserHolder(view, itemClick)
     }
 
     override fun onBindViewHolder(holder: SearchUserAdapter.SearchUserHolder, position: Int) {
         val item = data?.get(position)
         holder.usernameUser.text = item?.login
-        holder.nameUser.text = ""
         Glide.with(holder.imgUser.context)
             .load(item?.avatarUrl)
             .into(holder.imgUser)

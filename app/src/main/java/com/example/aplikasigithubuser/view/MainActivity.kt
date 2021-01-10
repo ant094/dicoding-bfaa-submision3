@@ -16,7 +16,7 @@ import com.example.aplikasigithubuser.adapter.MainAdapter
 import com.example.aplikasigithubuser.adapter.SearchUserAdapter
 import com.example.aplikasigithubuser.databinding.ActivityMainBinding
 import com.example.aplikasigithubuser.model.ItemsItem
-import com.example.aplikasigithubuser.model.ResponseSearchUser
+import com.example.aplikasigithubuser.model.Response
 import com.example.aplikasigithubuser.model.User
 import com.example.aplikasigithubuser.viewModel.ViewModelMainActivity
 
@@ -65,14 +65,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showDataSearchUser(it: ResponseSearchUser?) {
+    private fun showDataSearchUser(it: Response?) {
         binding.listUser.adapter =
             SearchUserAdapter(it?.items, object : SearchUserAdapter.OnClickListener {
                 override fun detailSearchUser(item: ItemsItem?) {
 
-//              val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
-//              intent.putExtra(EXTRA_DATA_USER, item)
-//              startActivity(intent)
+              val intent = Intent(this@MainActivity, DetailSearchUserActivity::class.java)
+              intent.putExtra(EXTRA_DATA_USER, item)
+              startActivity(intent)
                 }
             })
     }
