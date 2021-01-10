@@ -1,85 +1,68 @@
 package com.example.aplikasigithubuser.view
 
-import android.content.Intent
-import android.content.res.TypedArray
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.example.aplikasigithubuser.R
-import com.example.aplikasigithubuser.adapter.FollowersUserAdapter
-import com.example.aplikasigithubuser.adapter.MainAdapter
 import com.example.aplikasigithubuser.adapter.SectionsPagerAdapter
 import com.example.aplikasigithubuser.databinding.ActivityDetailUser2Binding
-import com.example.aplikasigithubuser.model.ItemsItem
+import com.example.aplikasigithubuser.model.ResponseUser
 import com.example.aplikasigithubuser.model.User
-import com.example.aplikasigithubuser.viewModel.ViewModelDetailUserActivity
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUser2Binding
-    lateinit var viewModel: ViewModelDetailUserActivity
-    companion object{
-        val EXTRA_DATA_USER = "data_user"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUser2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val getData = intent?.getParcelableExtra<User>(EXTRA_DATA_USER)
+        // Get Data dari MainActivity
+        val getData = intent?.getParcelableExtra<User>(MainActivity.EXTRA_DATA_USER)
+        val getResponData =
+            intent?.getParcelableExtra<ResponseUser>(MainActivity.EXTRA_RESPON_DATA_USER)
 
-        Glide.with(this).load(getData?.imgAvatar).into(binding.ivImg)
-        binding.tvUsername.text =  getData?.userName
-        binding.tvName.text = ": " + getData?.Name
-        binding.tvLocation.text = ": " + getData?.location
-        binding.tvRepository.text = ": " + getData?.repository
-        binding.tvFollowers.text = ": " + getData?.followers
-        binding.tvFollowing.text = ": " + getData?.following
-        binding.tvCompany.text = ": " + getData?.company
+        if (getData?.userName !== null) {
+            loadDataUser(getData)
+        } else {
+            loadResponDataUser(getResponData)
+        }
 
         binding.fabHome.setOnClickListener {
             onBackPressed()
         }
-        viewModel = ViewModelProviders.of(this).get(ViewModelDetailUserActivity::class.java)
-        viewModel.getReadFollower(getData?.userName!!)
-        viewModel.getReadFollowing(getData?.userName!!)
-        observer()
 
-
+//        Config Tab Layout
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(viewPager)
         supportActionBar?.elevation = 0f
-
+        FollowerFragment.username = getData?.userName ?: getResponData?.login
+        FollowingFragment.username = getData?.userName ?: getResponData?.login
     }
 
-    private fun observer() {
-        viewModel.responSuccessFollowing.observe(this, Observer {  showDataFollowingUser(it) })
-        viewModel.responErrorFollowing.observe(this, Observer {
-            Toast.makeText(this, "gagal", Toast.LENGTH_SHORT).show()
-        })
-
-        viewModel.responSuccessFollower.observe(this, Observer {  showDataFollowerUser(it) })
-        viewModel.responErrorFollower.observe(this, Observer {
-            Toast.makeText(this, "gagal", Toast.LENGTH_SHORT).show()
-        })
-    }
-    private fun showDataFollowerUser(it: List<ItemsItem>?) {
-      list_user2.adapter = FollowersUserAdapter(it)
+    private fun loadResponDataUser(responData: ResponseUser?) {
+        Glide.with(this).load(responData?.avatarUrl).into(binding.ivImg)
+        binding.tvUsername.text = responData?.login
+        binding.tvName.text = ": " + responData?.name
+        binding.tvLocation.text = ": " + responData?.location
+        binding.tvRepository.text = ": " + responData?.publicRepos
+        binding.tvFollowers.text = ": " + responData?.followers
+        binding.tvFollowing.text = ": " + responData?.following
+        binding.tvCompany.text = ": " + responData?.company
     }
 
-    private fun showDataFollowingUser(it: List<ItemsItem>?) {
-
-        list_user3.adapter = FollowersUserAdapter(it)
+    private fun loadDataUser(getData: User?) {
+        Glide.with(this).load(getData?.imgAvatar).into(binding.ivImg)
+        binding.tvUsername.text = getData?.userName
+        binding.tvName.text = ": " + getData?.Name
+        binding.tvLocation.text = ": " + getData?.location
+        binding.tvRepository.text = ": " + getData?.repository
+        binding.tvFollowers.text = ": " + getData?.followers
+        binding.tvFollowing.text = ": " + getData?.following
+        binding.tvCompany.text = ": " + getData?.company
     }
 
 }

@@ -9,12 +9,9 @@ import com.example.aplikasigithubuser.R
 import com.example.aplikasigithubuser.model.ItemsItem
 import kotlinx.android.synthetic.main.item_list_user.view.*
 
-class SearchUserAdapter(
-    private val data: List<ItemsItem?>?,
-    private val itemClick: SearchUserAdapter.OnClickListener
-) :
-    RecyclerView.Adapter<SearchUserAdapter.SearchUserHolder>() {
-    class SearchUserHolder(itemView: View, itemClick: OnClickListener) :
+class FollowersAndFollowingUserAdapter(private val data: List<ItemsItem>?) :
+    RecyclerView.Adapter<FollowersAndFollowingUserAdapter.FollowersUserHolder>() {
+    class FollowersUserHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val imgUser = itemView.imgUser
         val usernameUser = itemView.usernameUser
@@ -23,27 +20,26 @@ class SearchUserAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchUserAdapter.SearchUserHolder {
+    ): FollowersAndFollowingUserAdapter.FollowersUserHolder {
         var view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_list_search_user, parent, false)
-        return SearchUserAdapter.SearchUserHolder(view, itemClick)
+        return FollowersAndFollowingUserAdapter.FollowersUserHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SearchUserAdapter.SearchUserHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FollowersAndFollowingUserAdapter.FollowersUserHolder,
+        position: Int
+    ) {
         val item = data?.get(position)
         holder.usernameUser.text = item?.login
         Glide.with(holder.imgUser.context)
             .load(item?.avatarUrl)
             .into(holder.imgUser)
 
-        holder.itemView.setOnClickListener {
-            itemClick.detailSearchUser(item)
-        }
+
     }
 
     override fun getItemCount(): Int = data?.size ?: 0
-    interface OnClickListener {
-        fun detailSearchUser(item: ItemsItem?)
-    }
+
 }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.TypedArray
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -16,7 +17,8 @@ import com.example.aplikasigithubuser.adapter.MainAdapter
 import com.example.aplikasigithubuser.adapter.SearchUserAdapter
 import com.example.aplikasigithubuser.databinding.ActivityMainBinding
 import com.example.aplikasigithubuser.model.ItemsItem
-import com.example.aplikasigithubuser.model.Response
+import com.example.aplikasigithubuser.model.ResponseSearchUser
+import com.example.aplikasigithubuser.model.ResponseUser
 import com.example.aplikasigithubuser.model.User
 import com.example.aplikasigithubuser.viewModel.ViewModelMainActivity
 
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val EXTRA_DATA_USER = "data_user"
+        val EXTRA_RESPON_DATA_USER = "respon_data_user"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             // Masukkan data pada array dataListUser
             addItem()
         }
-
         observer()
 //      Tampilkan Data Menggunakan adapter
         loadData()
@@ -63,16 +65,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.responErrorSearchUser.observe(this, Observer {
             Toast.makeText(this, "gagal", Toast.LENGTH_SHORT).show()
         })
+        viewModel.responSuccessDetailUser.observe(this, Observer { prepareDetailData(it) })
+        viewModel.responErrorDetailUser.observe(this, Observer {
+            Toast.makeText(this, "gagal", Toast.LENGTH_SHORT).show()
+        })
     }
 
-    private fun showDataSearchUser(it: Response?) {
+    private fun prepareDetailData(it: ResponseUser?) {
+        val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
+        intent.putExtra(EXTRA_RESPON_DATA_USER, it)
+        startActivity(intent)
+    }
+
+    private fun showDataSearchUser(it: ResponseSearchUser?) {
+        binding.progressBarMain.visibility = View.INVISIBLE
         binding.listUser.adapter =
             SearchUserAdapter(it?.items, object : SearchUserAdapter.OnClickListener {
                 override fun detailSearchUser(item: ItemsItem?) {
 
-              val intent = Intent(this@MainActivity, DetailSearchUserActivity::class.java)
-              intent.putExtra(EXTRA_DATA_USER, item)
-              startActivity(intent)
+                    viewModel.getDataDetail(item?.login!!)
+
                 }
             })
     }
@@ -127,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                binding.progressBarMain.visibility = View.VISIBLE
                 viewModel.getDataSearch(query)
                 return true
             }
