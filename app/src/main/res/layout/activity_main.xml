@@ -7,7 +7,10 @@
     android:id="@+id/frame_container"
     tools:context=".view.MainActivity">
 
-
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_container" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_user"
         android:layout_width="match_parent"

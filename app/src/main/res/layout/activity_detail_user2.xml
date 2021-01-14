@@ -186,7 +186,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabHome"
+        android:id="@+id/fabFavorit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -194,8 +194,9 @@
         android:layout_marginRight="14dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
-        android:src="@drawable/home"
+        android:src="@drawable/icons8_love_24"
         app:backgroundTint="#F1EBEB"
-        tools:src="@drawable/home" />
+        app:tint="@android:color/holo_red_dark"
+         />
 
 </RelativeLayout>

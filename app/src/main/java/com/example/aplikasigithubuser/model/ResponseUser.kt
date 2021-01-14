@@ -103,3 +103,8 @@ data class ResponseUser(
 	@field:SerializedName("node_id")
 	val nodeId: String? = null
 ) : Parcelable
+
+@Parcelize
+data class Following(
+	val nameFollowing: String? = null,val name: String? = null,
+) : Parcelable

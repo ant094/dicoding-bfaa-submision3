@@ -2,16 +2,22 @@ package com.example.aplikasigithubuser.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.aplikasigithubuser.adapter.SectionsPagerAdapter
 import com.example.aplikasigithubuser.databinding.ActivityDetailUser2Binding
-import com.example.aplikasigithubuser.model.ResponseUser
-import com.example.aplikasigithubuser.model.User
+import com.example.aplikasigithubuser.model.*
+import com.example.aplikasigithubuser.viewModel.ViewModelDetailUserActivity
 import com.google.android.material.tabs.TabLayout
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUser2Binding
+    lateinit var viewModel: ViewModelDetailUserActivity
+
+    companion object{
+        var a : List<ItemsItem>? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUser2Binding.inflate(layoutInflater)
@@ -27,10 +33,25 @@ class DetailUserActivity : AppCompatActivity() {
         } else {
             loadResponDataUser(getResponData)
         }
+        viewModel = ViewModelProviders.of(this).get(ViewModelDetailUserActivity::class.java)
+        binding.fabFavorit.setOnClickListener {
 
-        binding.fabHome.setOnClickListener {
-            onBackPressed()
+            val name = binding.tvName.text.toString()
+            val location = binding.tvLocation.text.toString()
+            val repository = binding.tvRepository.text.toString()
+            val company = binding.tvCompany.text.toString()
+            val totalFollower = binding.tvFollowers.text.toString().toInt()
+            val totalFollowing = binding.tvFollowing.text.toString().toInt()
+            val dataFavorit = TableFavoritDb(null,name, location, repository,company,totalFollower, totalFollowing)
+            var listUserFollowing = ArrayList<TableFollowingDb>()
+            a?.forEach {
+                var dataFollowing = TableFollowingDb(FollowingFragment.username,it.login)
+                listUserFollowing.add(dataFollowing)
+            }
+            viewModel.insertDataFavorit(dataFavorit,listUserFollowing)
         }
+
+
 
 //        Config Tab Layout
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)

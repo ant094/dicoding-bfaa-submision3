@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.aplikasigithubuser.adapter.FollowersAndFollowingUserAdapter
 import com.example.aplikasigithubuser.databinding.FragmentFollowingBinding
+import com.example.aplikasigithubuser.model.Following
 import com.example.aplikasigithubuser.model.ItemsItem
+import com.example.aplikasigithubuser.model.TableFollowingDb
 import com.example.aplikasigithubuser.viewModel.ViewModelDetailUserActivity
+import java.util.ArrayList
 
 class FollowingFragment : Fragment() {
 
@@ -62,6 +65,9 @@ class FollowingFragment : Fragment() {
             binding.dataEmptyFollowing.visibility = View.GONE
             binding.listUserFollowing
                 .adapter = FollowersAndFollowingUserAdapter(it)
+
+            DetailUserActivity.a = it
+
         }
 
     }

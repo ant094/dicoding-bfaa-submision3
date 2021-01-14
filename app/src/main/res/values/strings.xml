@@ -115,7 +115,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_tab_follower">Content Tab Follower</string>
     <string name="content_tab_following">Content Tab Following</string>
-
+    <string name="favorit">Favorit</string>
+    <string name="setting">Setting</string>
 
 </resources>
 
