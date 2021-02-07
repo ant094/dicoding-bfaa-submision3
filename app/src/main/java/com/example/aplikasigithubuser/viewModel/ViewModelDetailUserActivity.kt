@@ -3,8 +3,6 @@ package com.example.aplikasigithubuser.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.aplikasigithubuser.model.ItemsItem
-import com.example.aplikasigithubuser.model.TableFavoritDb
-import com.example.aplikasigithubuser.model.TableFollowingDb
 import com.example.aplikasigithubuser.repo.RepositoryUser
 import com.example.aplikasigithubuser.repo.RepositoryUserDb
 
@@ -34,11 +32,11 @@ class ViewModelDetailUserActivity : ViewModel() {
         })
     }
 
-    fun insertDataFavorit(dataFavorit: TableFavoritDb, dataFollowing: List<TableFollowingDb>) {
-        repositoryUserDb.insertFavorit(
-            dataFavorit, dataFollowing,
-            myKanbanDatabase,
-            { responSuccessInsertFavorit.value = it },
-            { responErrorInsertFavorit.value = it })
-    }
+//    fun insertDataFavorit(dataFavorit: TableFavoritDb, dataFollowing: List<TableFollowingDb>) {
+//        repositoryUserDb.insertFavorit(
+//            dataFavorit, dataFollowing,
+//            myKanbanDatabase,
+//            { responSuccessInsertFavorit.value = it },
+//            { responErrorInsertFavorit.value = it })
+//    }
 }

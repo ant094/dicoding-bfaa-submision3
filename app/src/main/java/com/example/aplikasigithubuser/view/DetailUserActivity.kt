@@ -42,13 +42,13 @@ class DetailUserActivity : AppCompatActivity() {
             val company = binding.tvCompany.text.toString()
             val totalFollower = binding.tvFollowers.text.toString().toInt()
             val totalFollowing = binding.tvFollowing.text.toString().toInt()
-            val dataFavorit = TableFavoritDb(null,name, location, repository,company,totalFollower, totalFollowing)
-            var listUserFollowing = ArrayList<TableFollowingDb>()
-            a?.forEach {
-                var dataFollowing = TableFollowingDb(FollowingFragment.username,it.login)
-                listUserFollowing.add(dataFollowing)
-            }
-            viewModel.insertDataFavorit(dataFavorit,listUserFollowing)
+//            val dataFavorit = TableFavoritDb(null,name, location, repository,company,totalFollower, totalFollowing)
+//            var listUserFollowing = ArrayList<TableFollowingDb>()
+//            a?.forEach {
+//                var dataFollowing = TableFollowingDb(FollowingFragment.username,it.login)
+//                listUserFollowing.add(dataFollowing)
+//            }
+//            viewModel.insertDataFavorit(dataFavorit,listUserFollowing)
         }
 
 
